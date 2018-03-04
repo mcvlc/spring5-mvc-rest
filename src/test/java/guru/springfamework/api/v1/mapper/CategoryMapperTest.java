@@ -19,7 +19,7 @@ public class CategoryMapperTest {
         //given
         Category category = new Category();
         category.setName(NAME);
-       // category.setId(ID);
+        category.setId(ID);
 
         //when
         CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
