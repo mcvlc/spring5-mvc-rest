@@ -16,6 +16,7 @@ import java.util.Arrays;
 import static guru.springfamework.controllers.v1.AbstractRestControllerTest.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -115,15 +116,15 @@ public class CustomerControllerTest {
         returnDto.setLastName(customer.getLastName());
         returnDto.setCustomerUrl("/api/v1/customers/1");
 
-        when(customerService.saveCustomerByDTO(anyLong(),customer)).thenReturn(returnDto);
+        when(customerService.saveCustomerByDTO(anyLong(), any(CustomerDTO.class))).thenReturn(returnDto);
 
         //when/then
         mockMvc.perform(put("/api/v1/customers/1")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(asJsonString(customer)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstname", equalTo("Fred")))
-                .andExpect(jsonPath("$.lastname", equalTo("Flint")))
+                .andExpect(jsonPath("$.firstName", equalTo("Fred")))
+                .andExpect(jsonPath("$.lastName", equalTo("Flint")))
                 .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1")));
     }
 }
